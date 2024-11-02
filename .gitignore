@@ -6,6 +6,10 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 data/*
 data/
+
+.idea/*
+.out
+datavis.iml
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -1002,3 +1006,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,pycharm,intellij+all,intellij+iml,r,java,maven,python,vs,macos,windows,linux
+/.idea/
