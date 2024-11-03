@@ -69,3 +69,15 @@ max_rating_isbn <- ratings_dt[,.N,by=ISBN][order(-N)][1, ISBN]
 
 year_of_publication <- books_dt[ISBN == max_rating_isbn, Year_Of_Publication]
 print(year_of_publication)
+
+max_ratings <- ratings_dt[, .(Max_Book_Rating = max(Book_Rating)), by = ISBN]
+
+ratings_dt <- merge(ratings_dt, max_ratings, by = "ISBN", all.x = TRUE)
+
+authors <- c("Agatha Christie", "William Shakespeare", "Stephen King",
+             "Ann M. Martin", "Carolyn Keene", "Francine Pascal",
+             "Isaac Asimov", "Nora Roberts", "Barbara Cartland", "Charles Dickens")
+authors
+ratings_dt <- ratings_dt[Book_Author %in% authors]
+
+ratings_dt[, .(N=.N, max_rating = max(Book_Rating), average_ranking = mean(Book_Rating, na.rm = TRUE))  , by= Book_Author]
