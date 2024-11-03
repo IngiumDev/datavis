@@ -50,4 +50,22 @@ dt[, .(mean_age = mean(age, na.rm = TRUE)), by = species][mean_age > 70]
 dt[,height_m := height/100]
 dt[, BMI := (mass/ (height_m*height_m))]
 
-dt[,mean_BMI]
+dt[, .(mean_bmi = mean(BMI, na.rm=TRUE)), by =  species][order(-mean_bmi)][1:10]
+
+# Section 3
+
+ratings_dt[Book_Rating>=7, High_Rating := 1]
+ratings_dt[,.N,by=High_Rating]
+
+no_user_ratings_dt <- users_dt[!User_ID  %in% ratings_dt[,User_ID]]
+
+users_dt[User_ID %in% ratings_dt[, User_ID], .(mean_age = mean(Age, na.rm=TRUE))]
+
+nrow(ratings_dt) / nrow(users_dt)
+
+ratings_dt[Book_Rating == 10, ][order(Year_Of_Publication), Book_Title][1]
+
+max_rating_isbn <- ratings_dt[,.N,by=ISBN][order(-N)][1, ISBN]
+
+year_of_publication <- books_dt[ISBN == max_rating_isbn, Year_Of_Publication]
+print(year_of_publication)
