@@ -24,4 +24,40 @@ x <- as.data.table(x)
 
 ggplot(x, aes(sample=x)) +geom_qq() +geom_abline(slope=1, intercept = 0)
 
-medals_dt <- fread('extdata/lec04_data/lec04_data/exercise/medals.csv')
+medals_dt <- fread('extdata/lec04_data/exercise/medals.csv')
+
+ggplot(medals_dt, aes(x=population, y=total)) + geom_point()
+
+
+ggplot(medals_dt, aes(x=population, y=total)) + geom_point() + scale_x_log10() +scale_y_log10()
+
+ggplot(medals_dt, aes(x=population, y=total, label = country)) + geom_point() + scale_x_log10() +scale_y_log10() + geom_text()
+
+ggplot(medals_dt, aes(x=population, y=total,  label = country)) + geom_point() + scale_x_log10() +scale_y_log10() + geom_text_repel()
+
+anscombe <- anscombe
+anscombe_reshaped <- anscombe %>%
+  as.data.table %>%
+  .[, ID := seq(nrow(.))] %>%
+  melt(id.var=c("ID")) %>%
+  separate(variable, c('xy', "group"), sep=1) %>%
+  as.data.table %>%
+  dcast(... ~ xy) %>%
+  .[, group := paste0("dataset_", group)]
+
+
+anscombe_reshaped[, .(mean_x = mean(x, na.rm=TRUE), sd_x = sd(x, na.rm=TRUE),   mean_y= mean(y, na.rm=TRUE), sd_y=sd(y,na.rm=TRUE), cor= cor(x,y)), by =  group]
+
+
+ggplot(anscombe_reshaped, aes(x,y)) +geom_point() +facet_grid(~group)
+
+
+boxplots_dt <- fread('extdata/lec04_data/exercise/boxplots.csv')
+boxplots_melted <- melt(boxplots_dt, measure.vars = c("dataset_1","dataset_2","dataset_3","dataset_4","dataset_5"), variable.name = "dataset_number",value.name = "value")
+ggplot(boxplots_melted, aes(x=dataset_number, y=value)) + geom_boxplot()
+
+ggplot(boxplots_melted, aes(x=dataset_number, y=value)) + geom_boxplot() + geom_jitter(width=0.1,alpha=0.2)
+ggplot(boxplots_melted, aes(x=dataset_number, y=value)) + geom_violin()
+
+#Section 8
+# geom_point(alpha=0.4)
