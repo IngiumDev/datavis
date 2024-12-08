@@ -57,7 +57,7 @@ h_complete <- pheatmap(plot.data, show_rownames=F,
 complete <- cutree(h_complete$tree_row, k = 3)
 
 ## label the row names to be able to annotate rows
-rownames(plot.data) <- 1:nrow(plot.data)
+rownames(plot.data) <- seq_len(nrow(plot.data))
 ## create a data.frame for the row annotations
 row.ann <- data.table(Species = iris$Species)
 row.ann[, complete:=factor(complete)] # the clusters need to be factors
@@ -87,7 +87,7 @@ pheatmap(as.matrix(iris_dt[, -"Species"]), cluster_rows = TRUE, scale='column', 
 # X2 = 1/2(4+6,6+4) = (5,5)
 
 scaled.data <- scale(plot.data) # it is important to scale your data for k-means
-km = kmeans(scaled.data, 3)
+km <- kmeans(scaled.data, 3)
 km
 
 # The table allows us to see in how many observations the methods coincided

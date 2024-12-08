@@ -2,9 +2,9 @@ library(data.table)
 library(magrittr) # the %>% (pipe) operator
 library(dplyr) # contains the 'starwars' dataset needed later
 
-users_dt = fread('data/BX-Users.csv')
-books_dt = fread('data/BX-Books.csv')
-ratings_dt = fread('data/BX-Book-Ratings.csv')
+users_dt <- fread('data/BX-Users.csv')
+books_dt <- fread('data/BX-Books.csv')
+ratings_dt <- fread('data/BX-Book-Ratings.csv')
 print(c(class(users_dt), class(books_dt), class(ratings_dt)))
 
 colnames(users_dt)
@@ -17,9 +17,9 @@ summary(users_dt)
 head(ratings_dt, n = 5)
 tail(ratings_dt, n = 5)
 
-colnames(users_dt) = gsub("-", "_", colnames(users_dt))
-colnames(books_dt) = gsub("-", "_", colnames(books_dt))
-colnames(ratings_dt) = gsub("-", "_", colnames(ratings_dt))
+colnames(users_dt) <- gsub("-", "_", colnames(users_dt))
+colnames(books_dt) <- gsub("-", "_", colnames(books_dt))
+colnames(ratings_dt) <- gsub("-", "_", colnames(ratings_dt))
 
 books_dt[, c("Image_URL_S", "Image_URL_M", "Image_URL_L") := NULL]
 
